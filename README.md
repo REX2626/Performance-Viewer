@@ -1,7 +1,12 @@
 # Performance-Viewer
 
-My first C program
+Program which shows the current performance of the CPU, GPU, RAM and storage
 
-Only uses standard c files - no libraries
+Uses the SDL library
 
-Shows the current cpu performance
+Written entirely in C
+
+Designed to be performant, simple and useful
+
+**TO RUN:**
+Enter `make` or `mingw32-make` into terminal
