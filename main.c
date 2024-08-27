@@ -32,6 +32,8 @@ void draw(SDL_Renderer* renderer) {
 
     // Draw text
     drawLetter(renderer, LETTER_C, 400, 200, 10);
+    drawLetter(renderer, LETTER_P, 450, 200, 10);
+    drawLetter(renderer, LETTER_U, 500, 200, 10);
 
     // Update screen
     SDL_RenderPresent(renderer);
