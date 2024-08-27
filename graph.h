@@ -13,3 +13,6 @@ void drawGraph(SDL_Renderer* renderer, Graph graph);
 // ------ GRAPHS ------
 
 Graph CPU_GRAPH;
+Graph GPU_GRAPH;
+Graph RAM_GRAPH;
+Graph SSD_GRAPH;

@@ -13,6 +13,24 @@ void initGraphs(void) {
     CPU_GRAPH.title[2] = LETTER_U;
     CPU_GRAPH.pos.x = 150;
     CPU_GRAPH.pos.y = 100;
+
+    GPU_GRAPH.title[0] = LETTER_G;
+    GPU_GRAPH.title[1] = LETTER_P;
+    GPU_GRAPH.title[2] = LETTER_U;
+    GPU_GRAPH.pos.x = 750;
+    GPU_GRAPH.pos.y = 100;
+
+    RAM_GRAPH.title[0] = LETTER_R;
+    RAM_GRAPH.title[1] = LETTER_A;
+    RAM_GRAPH.title[2] = LETTER_M;
+    RAM_GRAPH.pos.x = 150;
+    RAM_GRAPH.pos.y = 350;
+
+    SSD_GRAPH.title[0] = LETTER_S;
+    SSD_GRAPH.title[1] = LETTER_S;
+    SSD_GRAPH.title[2] = LETTER_D;
+    SSD_GRAPH.pos.x = 750;
+    SSD_GRAPH.pos.y = 350;
 }
 
 void drawGraph(SDL_Renderer* renderer, Graph graph) {

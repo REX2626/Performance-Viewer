@@ -10,10 +10,6 @@ const int HEIGHT = 600;
 const SDL_Colour BACKGROUND_COLOUR = {20, 20, 20, SDL_ALPHA_OPAQUE};
 const SDL_Colour MAIN_COLOUR = {0, 255, 0, SDL_ALPHA_OPAQUE};
 
-// const Graph CPU_GRAPH = {150, 100, GRAPH_WIDTH, GRAPH_HEIGHT};
-// const SDL_Rect GPU_RECT = {750, 100, GRAPH_WIDTH, GRAPH_HEIGHT};
-// const SDL_Rect RAM_RECT = {150, 400, GRAPH_WIDTH, GRAPH_HEIGHT};
-// const SDL_Rect SSD_RECT = {750, 400, GRAPH_WIDTH, GRAPH_HEIGHT};
 
 void draw(SDL_Renderer* renderer) {
     // Draw background
@@ -23,6 +19,9 @@ void draw(SDL_Renderer* renderer) {
 
     // Draw graphs
     drawGraph(renderer, CPU_GRAPH);
+    drawGraph(renderer, GPU_GRAPH);
+    drawGraph(renderer, RAM_GRAPH);
+    drawGraph(renderer, SSD_GRAPH);
 
     // Update screen
     SDL_RenderPresent(renderer);
