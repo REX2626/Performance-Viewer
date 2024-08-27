@@ -2,21 +2,18 @@
 #include <stdbool.h>
 #include "src/include/SDL2/SDL.h"
 #include "graph.h"
-#include "text.h"
 
 
 
 const int WIDTH = 1000;
 const int HEIGHT = 600;
-const int GRAPH_WIDTH = 120;
-const int GRAPH_HEIGHT = 120;
 const SDL_Colour BACKGROUND_COLOUR = {20, 20, 20, SDL_ALPHA_OPAQUE};
 const SDL_Colour MAIN_COLOUR = {0, 255, 0, SDL_ALPHA_OPAQUE};
 
-const SDL_Rect CPU_RECT = {150, 100, GRAPH_WIDTH, GRAPH_HEIGHT};
-const SDL_Rect GPU_RECT = {750, 100, GRAPH_WIDTH, GRAPH_HEIGHT};
-const SDL_Rect RAM_RECT = {150, 400, GRAPH_WIDTH, GRAPH_HEIGHT};
-const SDL_Rect SSD_RECT = {750, 400, GRAPH_WIDTH, GRAPH_HEIGHT};
+// const Graph CPU_GRAPH = {150, 100, GRAPH_WIDTH, GRAPH_HEIGHT};
+// const SDL_Rect GPU_RECT = {750, 100, GRAPH_WIDTH, GRAPH_HEIGHT};
+// const SDL_Rect RAM_RECT = {150, 400, GRAPH_WIDTH, GRAPH_HEIGHT};
+// const SDL_Rect SSD_RECT = {750, 400, GRAPH_WIDTH, GRAPH_HEIGHT};
 
 void draw(SDL_Renderer* renderer) {
     // Draw background
@@ -25,15 +22,7 @@ void draw(SDL_Renderer* renderer) {
     SDL_SetRenderDrawColor(renderer, MAIN_COLOUR.r, MAIN_COLOUR.g, MAIN_COLOUR.b, MAIN_COLOUR.a);
 
     // Draw graphs
-    drawGraph(renderer, CPU_RECT);
-    drawGraph(renderer, GPU_RECT);
-    drawGraph(renderer, RAM_RECT);
-    drawGraph(renderer, SSD_RECT);
-
-    // Draw text
-    drawLetter(renderer, LETTER_C, 400, 200, 10);
-    drawLetter(renderer, LETTER_P, 450, 200, 10);
-    drawLetter(renderer, LETTER_U, 500, 200, 10);
+    drawGraph(renderer, CPU_GRAPH);
 
     // Update screen
     SDL_RenderPresent(renderer);
@@ -68,6 +57,9 @@ int main(int argc, char* argv[]) {
         printf("Could not initialize text (likely insufficent memory)\n");
         return EXIT_FAILURE;
     }
+
+    // Set up graphs
+    initGraphs();
 
     // Set up Main loop
     bool running = true;

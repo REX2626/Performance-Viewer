@@ -19,6 +19,7 @@ void drawLetter(SDL_Renderer* renderer, Letter letter, int offsetX, int offsetY,
 
 
 // ------ LETTERS ------
+
 Letter LETTER_C;
 Letter LETTER_P;
 Letter LETTER_U;
