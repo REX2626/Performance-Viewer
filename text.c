@@ -15,9 +15,11 @@ void drawLetter(SDL_Renderer* renderer, Letter letter, int offsetX, int offsetY,
 
 // ------ LETTERS ------
 
-void initText(void) {
+int initText(void) {
+    // Returns 0 for success, -1 for failure
     LETTER_C.numPairs = 3;
     SDL_Point* points = malloc(6 * sizeof(SDL_Point));
+    if (points == NULL) return -1;
     points[0].x = 3;
     points[0].y = 0;
     points[1].x = 0;
@@ -31,4 +33,6 @@ void initText(void) {
     points[5].x = 3;
     points[5].y = 7;
     LETTER_C.points = points;
+
+    return 0;
 }

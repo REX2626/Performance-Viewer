@@ -7,12 +7,13 @@ numPairs is the number of pairs
 
 Each letter is 4 (width) by 8 (height)
 */
+
 typedef struct {
     int numPairs;
     SDL_Point* points;
 } Letter;
 
-void initText(void);
+int initText(void);
 
 void drawLetter(SDL_Renderer* renderer, Letter letter, int offsetX, int offsetY, int scale);
 
