@@ -5,7 +5,7 @@ Structure for a letter
 points is a list of points that will be connected by straight lines in pairs
 numPairs is the number of pairs
 
-Each letter is 4 (width) by 8 (height)
+Each letter is 5 (width) by 9 (height)
 */
 
 typedef struct {
