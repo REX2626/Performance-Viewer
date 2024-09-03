@@ -2,13 +2,26 @@
 #include "stats.h"
 #include "text.h"
 
+
+
+typedef struct ListNode{
+    float value;
+    struct ListNode* next;
+} ListNode;
+
 typedef struct {
     Letter title[3];
     SDL_Point pos;
     float (*getUsage)(void);
+    ListNode* startNode;
+    ListNode* endNode;
 } Graph;
 
 void initGraphs(void);
+
+Graph initLinkedList(Graph graph);
+
+Graph updateGraph(Graph graph);
 
 void drawGraph(SDL_Renderer* renderer, Graph graph);
 

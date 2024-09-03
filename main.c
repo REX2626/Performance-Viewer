@@ -26,6 +26,13 @@ Letter LETTER_S;
 Letter LETTER_U;
 
 
+void update(void) {
+    CPU_GRAPH = updateGraph(CPU_GRAPH);
+    GPU_GRAPH = updateGraph(GPU_GRAPH);
+    RAM_GRAPH = updateGraph(RAM_GRAPH);
+    SSD_GRAPH = updateGraph(SSD_GRAPH);
+}
+
 void draw(SDL_Renderer* renderer) {
     // Draw background
     SDL_SetRenderDrawColor(renderer, BACKGROUND_COLOUR.r, BACKGROUND_COLOUR.g, BACKGROUND_COLOUR.b, BACKGROUND_COLOUR.a);
@@ -40,8 +47,6 @@ void draw(SDL_Renderer* renderer) {
 
     // Update screen
     SDL_RenderPresent(renderer);
-
-    printf("%f\n", getMemoryUsage());
 }
 
 int main(int argc, char* argv[]) {
@@ -56,7 +61,7 @@ int main(int argc, char* argv[]) {
         return EXIT_FAILURE;
     }
 
-    SDL_Window *window = SDL_CreateWindow("PerfView", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI);
+    SDL_Window *window = SDL_CreateWindow("PerfView", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_ALWAYS_ON_TOP);
     if (window == NULL) {
         printf("Could not create window: %s\n", SDL_GetError());
         return EXIT_FAILURE;
@@ -98,6 +103,9 @@ int main(int argc, char* argv[]) {
                 }
             }
         }
+
+        // Update
+        update();
 
         // Graphics
         draw(renderer);
