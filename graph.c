@@ -12,14 +12,14 @@ const int LINE_PADDING = 5;
 const int NUM_VALUES = GRAPH_WIDTH - 2 * LINE_PADDING;
 
 // initGraphs must be called after initText
-void initGraphs(void) {
+int initGraphs(void) {
     CPU_GRAPH.title[0] = LETTER_C;
     CPU_GRAPH.title[1] = LETTER_P;
     CPU_GRAPH.title[2] = LETTER_U;
     CPU_GRAPH.pos.x = 150;
     CPU_GRAPH.pos.y = 100;
     CPU_GRAPH.getUsage = dummy;
-    CPU_GRAPH = initLinkedList(CPU_GRAPH);
+    if (initLinkedList(&CPU_GRAPH) == -1) return -1;
 
     GPU_GRAPH.title[0] = LETTER_G;
     GPU_GRAPH.title[1] = LETTER_P;
@@ -27,7 +27,7 @@ void initGraphs(void) {
     GPU_GRAPH.pos.x = 750;
     GPU_GRAPH.pos.y = 100;
     GPU_GRAPH.getUsage = dummy;
-    GPU_GRAPH = initLinkedList(GPU_GRAPH);
+    if (initLinkedList(&GPU_GRAPH) == -1) return -1;
 
     RAM_GRAPH.title[0] = LETTER_R;
     RAM_GRAPH.title[1] = LETTER_A;
@@ -35,7 +35,7 @@ void initGraphs(void) {
     RAM_GRAPH.pos.x = 150;
     RAM_GRAPH.pos.y = 350;
     RAM_GRAPH.getUsage = getMemoryUsage;
-    RAM_GRAPH = initLinkedList(RAM_GRAPH);
+    if (initLinkedList(&RAM_GRAPH) == -1) return -1;
 
     SSD_GRAPH.title[0] = LETTER_S;
     SSD_GRAPH.title[1] = LETTER_S;
@@ -43,16 +43,20 @@ void initGraphs(void) {
     SSD_GRAPH.pos.x = 750;
     SSD_GRAPH.pos.y = 350;
     SSD_GRAPH.getUsage = dummy;
-    SSD_GRAPH = initLinkedList(SSD_GRAPH);
+    if (initLinkedList(&SSD_GRAPH) == -1) return -1;
+
+    return 0;
 }
 
-Graph initLinkedList(Graph graph) {
-    graph.startNode = malloc(sizeof(ListNode));
-    ListNode* node = graph.startNode;
+int initLinkedList(Graph* graph) {
+    graph->startNode = malloc(sizeof(ListNode));
+    if (graph->startNode == NULL) return -1;
+    ListNode* node = graph->startNode;
 
     for (int i = 0; i < NUM_VALUES-1; i++) {
         node->value = 0;
         ListNode* new = malloc(sizeof(ListNode));
+        if (new == NULL) return -1;
         node->next = new;
         node = new;
     }
@@ -60,31 +64,32 @@ Graph initLinkedList(Graph graph) {
     node->value = 0;
     node->next = NULL;
 
-    graph.endNode = node;
+    graph->endNode = node;
 
-    return graph;
+    return 0;
 }
 
-Graph addValueToGraph(Graph graph, float value) {
-    ListNode* oldNode = graph.startNode;
-    graph.startNode = graph.startNode->next;
+int addValueToGraph(Graph* graph, float value) {
+    ListNode* oldNode = graph->startNode;
+    graph->startNode = graph->startNode->next;
     free(oldNode);
 
     ListNode* newNode = malloc(sizeof(ListNode));
+    if (newNode == NULL) return -1;
     newNode->value = value;
     newNode->next = NULL;
-    graph.endNode->next = newNode;
-    graph.endNode = newNode;
+    graph->endNode->next = newNode;
+    graph->endNode = newNode;
 
-    return graph;
+    return 0;
 }
 
-Graph updateGraph(Graph graph) {
+int updateGraph(Graph* graph) {
     // Add usage data to graph
-    float usage = graph.getUsage();
-    graph = addValueToGraph(graph, usage);
+    float usage = graph->getUsage();
+    if (addValueToGraph(graph, usage) == -1) return -1;
 
-    return graph;
+    return 0;
 }
 
 void drawGraph(SDL_Renderer* renderer, Graph graph) {

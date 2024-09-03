@@ -17,11 +17,11 @@ typedef struct {
     ListNode* endNode;
 } Graph;
 
-void initGraphs(void);
+int initGraphs(void);
 
-Graph initLinkedList(Graph graph);
+int initLinkedList(Graph* graph);
 
-Graph updateGraph(Graph graph);
+int updateGraph(Graph* graph);
 
 void drawGraph(SDL_Renderer* renderer, Graph graph);
 

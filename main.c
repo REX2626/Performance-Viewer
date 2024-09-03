@@ -26,11 +26,13 @@ Letter LETTER_S;
 Letter LETTER_U;
 
 
-void update(void) {
-    CPU_GRAPH = updateGraph(CPU_GRAPH);
-    GPU_GRAPH = updateGraph(GPU_GRAPH);
-    RAM_GRAPH = updateGraph(RAM_GRAPH);
-    SSD_GRAPH = updateGraph(SSD_GRAPH);
+int update(void) {
+    if (updateGraph(&CPU_GRAPH) == -1) return -1;
+    if (updateGraph(&GPU_GRAPH) == -1) return -1;
+    if (updateGraph(&RAM_GRAPH) == -1) return -1;
+    if (updateGraph(&SSD_GRAPH) == -1) return -1;
+
+    return 0;
 }
 
 void draw(SDL_Renderer* renderer) {
@@ -80,7 +82,10 @@ int main(int argc, char* argv[]) {
     }
 
     // Set up graphs
-    initGraphs();
+    if (initGraphs() == -1) {
+        printf("Could not initialize graphs (likely insufficent memory)\n");
+        return EXIT_FAILURE;
+    }
 
     // Set up Main loop
     bool running = true;
@@ -105,7 +110,10 @@ int main(int argc, char* argv[]) {
         }
 
         // Update
-        update();
+        if (update() == -1) {
+            printf("Could not update (likely insufficient memory)\n");
+            return EXIT_FAILURE;
+        }
 
         // Graphics
         draw(renderer);
