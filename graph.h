@@ -5,6 +5,7 @@
 typedef struct {
     Letter title[3];
     SDL_Point pos;
+    float (*getUsage)(void);
 } Graph;
 
 void initGraphs(void);

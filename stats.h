@@ -3,3 +3,5 @@
 
 
 float getMemoryUsage(void);
+
+float dummy(void);

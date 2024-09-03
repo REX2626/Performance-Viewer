@@ -13,24 +13,28 @@ void initGraphs(void) {
     CPU_GRAPH.title[2] = LETTER_U;
     CPU_GRAPH.pos.x = 150;
     CPU_GRAPH.pos.y = 100;
+    CPU_GRAPH.getUsage = dummy;
 
     GPU_GRAPH.title[0] = LETTER_G;
     GPU_GRAPH.title[1] = LETTER_P;
     GPU_GRAPH.title[2] = LETTER_U;
     GPU_GRAPH.pos.x = 750;
     GPU_GRAPH.pos.y = 100;
+    GPU_GRAPH.getUsage = dummy;
 
     RAM_GRAPH.title[0] = LETTER_R;
     RAM_GRAPH.title[1] = LETTER_A;
     RAM_GRAPH.title[2] = LETTER_M;
     RAM_GRAPH.pos.x = 150;
     RAM_GRAPH.pos.y = 350;
+    RAM_GRAPH.getUsage = getMemoryUsage;
 
     SSD_GRAPH.title[0] = LETTER_S;
     SSD_GRAPH.title[1] = LETTER_S;
     SSD_GRAPH.title[2] = LETTER_D;
     SSD_GRAPH.pos.x = 750;
     SSD_GRAPH.pos.y = 350;
+    SSD_GRAPH.getUsage = dummy;
 }
 
 void drawGraph(SDL_Renderer* renderer, Graph graph) {
@@ -55,4 +59,10 @@ void drawGraph(SDL_Renderer* renderer, Graph graph) {
         graph.pos.y + GRAPH_TITLE_PADDING + GRAPH_HEIGHT,
         graph.pos.x + GRAPH_WIDTH,
         graph.pos.y + GRAPH_TITLE_PADDING + GRAPH_HEIGHT);
+
+    // Draw usage bar
+    float usage = graph.getUsage();
+    SDL_RenderDrawPoint(renderer,
+        center,
+        graph.pos.y + GRAPH_TITLE_PADDING + GRAPH_HEIGHT * (1 - usage));
 }

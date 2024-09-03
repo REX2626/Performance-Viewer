@@ -12,3 +12,7 @@ float getMemoryUsage(void) {
 
     return (float) totalMemUsed / totalMem;
 }
+
+float dummy(void) {
+    return 0.5;
+}
