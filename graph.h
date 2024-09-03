@@ -12,7 +12,7 @@ void drawGraph(SDL_Renderer* renderer, Graph graph);
 
 // ------ GRAPHS ------
 
-Graph CPU_GRAPH;
-Graph GPU_GRAPH;
-Graph RAM_GRAPH;
-Graph SSD_GRAPH;
+extern Graph CPU_GRAPH;
+extern Graph GPU_GRAPH;
+extern Graph RAM_GRAPH;
+extern Graph SSD_GRAPH;

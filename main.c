@@ -10,6 +10,21 @@ const int HEIGHT = 600;
 const SDL_Colour BACKGROUND_COLOUR = {20, 20, 20, SDL_ALPHA_OPAQUE};
 const SDL_Colour MAIN_COLOUR = {0, 255, 0, SDL_ALPHA_OPAQUE};
 
+Graph CPU_GRAPH;
+Graph GPU_GRAPH;
+Graph RAM_GRAPH;
+Graph SSD_GRAPH;
+
+Letter LETTER_A;
+Letter LETTER_C;
+Letter LETTER_D;
+Letter LETTER_G;
+Letter LETTER_M;
+Letter LETTER_P;
+Letter LETTER_R;
+Letter LETTER_S;
+Letter LETTER_U;
+
 
 void draw(SDL_Renderer* renderer) {
     // Draw background
