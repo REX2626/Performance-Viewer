@@ -1,4 +1,5 @@
 #include "src/include/SDL2/SDL.h"
+#include "stats.h"
 #include "text.h"
 
 typedef struct {

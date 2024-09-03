@@ -40,6 +40,8 @@ void draw(SDL_Renderer* renderer) {
 
     // Update screen
     SDL_RenderPresent(renderer);
+
+    printf("%f\n", getMemoryUsage());
 }
 
 int main(int argc, char* argv[]) {
