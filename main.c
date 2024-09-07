@@ -87,6 +87,9 @@ int main(int argc, char* argv[]) {
         return EXIT_FAILURE;
     }
 
+    // Set up stats
+    initStats();
+
     // Set up Main loop
     bool running = true;
 

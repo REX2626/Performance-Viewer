@@ -18,7 +18,7 @@ int initGraphs(void) {
     CPU_GRAPH.title[2] = LETTER_U;
     CPU_GRAPH.pos.x = 150;
     CPU_GRAPH.pos.y = 100;
-    CPU_GRAPH.getUsage = dummy;
+    CPU_GRAPH.getUsage = getProcessorUsage;
     if (initLinkedList(&CPU_GRAPH) == -1) return -1;
 
     GPU_GRAPH.title[0] = LETTER_G;
