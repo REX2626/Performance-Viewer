@@ -10,11 +10,13 @@ PDH_HCOUNTER cpuTotal;
 MEMORYSTATUSEX memInfo;
 float t = 0;
 
-void initStats() {
+int initStats() {
     DWORD_PTR userData = {0};
-    PdhOpenQuery(NULL, userData, &cpuQuery);
-    PdhAddEnglishCounter(cpuQuery, "\\Processor(_Total)\\% Processor Time", userData, &cpuTotal);
-    PdhCollectQueryData(cpuQuery);
+    if (PdhOpenQuery(NULL, userData, &cpuQuery) != ERROR_SUCCESS) return -1;
+    if (PdhAddEnglishCounter(cpuQuery, "\\Processor(_Total)\\% Processor Time", userData, &cpuTotal) != ERROR_SUCCESS) return -1;
+    if (PdhCollectQueryData(cpuQuery) != ERROR_SUCCESS) return -1;
+
+    return 0;
 }
 
 float getProcessorUsage(void) {

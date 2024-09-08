@@ -88,7 +88,10 @@ int main(int argc, char* argv[]) {
     }
 
     // Set up stats
-    initStats();
+    if (initStats() == -1) {
+        printf("Could not initialize stats\n");
+        return EXIT_FAILURE;
+    }
 
     // Set up Main loop
     bool running = true;

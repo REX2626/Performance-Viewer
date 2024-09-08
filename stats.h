@@ -2,7 +2,7 @@
 
 
 
-void initStats(void);
+int initStats(void);
 
 float getProcessorUsage(void);
 
