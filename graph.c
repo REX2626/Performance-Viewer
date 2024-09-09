@@ -87,6 +87,7 @@ int addValueToGraph(Graph* graph, float value) {
 int updateGraph(Graph* graph) {
     // Add usage data to graph
     float usage = graph->getUsage();
+    if (usage == -1) return -1;
     if (addValueToGraph(graph, usage) == -1) return -1;
 
     return 0;
