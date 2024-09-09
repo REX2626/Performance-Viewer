@@ -3,7 +3,6 @@
 #include <pdhmsg.h>
 #include <tchar.h>
 #include "stats.h"
-#include <stdio.h>
 
 
 

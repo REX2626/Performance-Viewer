@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <time.h>
 #include "src/include/SDL2/SDL.h"
 #include "graph.h"
 
@@ -7,6 +8,7 @@
 
 const int WIDTH = 1000;
 const int HEIGHT = 600;
+const double TOTAL_DURATION = 10;
 const SDL_Colour BACKGROUND_COLOUR = {20, 20, 20, SDL_ALPHA_OPAQUE};
 const SDL_Colour MAIN_COLOUR = {0, 255, 0, SDL_ALPHA_OPAQUE};
 
@@ -95,11 +97,14 @@ int main(int argc, char* argv[]) {
 
     // Set up Main loop
     bool running = true;
+    const double TICK_DURATION = TOTAL_DURATION / NUM_VALUES;
 
     SDL_Event event;
 
     // Main loop
-    while (running){
+    while (running) {
+
+        clock_t time1 = clock();
 
         // Handle events
         while (SDL_PollEvent(&event)) {
@@ -123,6 +128,18 @@ int main(int argc, char* argv[]) {
 
         // Graphics
         draw(renderer);
+
+        // Sleep until tick is finished
+        // TODO: Do 1 clock() call per loop, check difference with previous call
+        // TODO: so that sleep calculations are taken into account
+        // TODO: Instead of sleeping, carry on updating usage info but not graphics
+        // TODO: Store multiple values for each point, and take average
+        clock_t time2 = clock();
+        double deltaTime = (double) (time2 - time1) / CLOCKS_PER_SEC;
+        double sleepTime = max(0, 40 - deltaTime * 1000);
+
+        Sleep(sleepTime);
+
     }
 
     SDL_DestroyWindow(window);

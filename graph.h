@@ -27,6 +27,8 @@ void drawGraph(SDL_Renderer* renderer, Graph graph);
 
 // ------ GRAPHS ------
 
+extern const int NUM_VALUES;
+
 extern Graph CPU_GRAPH;
 extern Graph GPU_GRAPH;
 extern Graph RAM_GRAPH;
