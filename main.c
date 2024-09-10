@@ -100,11 +100,16 @@ int main(int argc, char* argv[]) {
     const double TICK_DURATION = TOTAL_DURATION / NUM_VALUES;
 
     SDL_Event event;
+    double prevTime = (double) clock() / CLOCKS_PER_SEC;
 
     // Main loop
     while (running) {
 
-        clock_t time1 = clock();
+        // Sleep until tick is finished
+        double nowTime = (double) clock() / CLOCKS_PER_SEC;
+        double sleepTime = max(0, prevTime + TICK_DURATION - nowTime);
+        Sleep(sleepTime * 1000);
+        prevTime += TICK_DURATION;
 
         // Handle events
         while (SDL_PollEvent(&event)) {
@@ -129,17 +134,9 @@ int main(int argc, char* argv[]) {
         // Graphics
         draw(renderer);
 
-        // Sleep until tick is finished
-        // TODO: Do 1 clock() call per loop, check difference with previous call
-        // TODO: so that sleep calculations are taken into account
         // TODO: Instead of sleeping, carry on updating usage info but not graphics
         // TODO: Store multiple values for each point, and take average
-        clock_t time2 = clock();
-        double deltaTime = (double) (time2 - time1) / CLOCKS_PER_SEC;
-        double sleepTime = max(0, 40 - deltaTime * 1000);
-
-        Sleep(sleepTime);
-
+        // TODO: Handle events in seperate thread irrespective of ticks per second
     }
 
     SDL_DestroyWindow(window);
