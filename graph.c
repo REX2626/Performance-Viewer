@@ -20,6 +20,7 @@ int initGraphs(void) {
     CPU_GRAPH.pos.y = 100;
     CPU_GRAPH.getUsage = getProcessorUsage;
     if (initLinkedList(&CPU_GRAPH) == -1) return -1;
+    CPU_GRAPH.numUsages = 0;
 
     GPU_GRAPH.title[0] = LETTER_G;
     GPU_GRAPH.title[1] = LETTER_P;
@@ -28,6 +29,7 @@ int initGraphs(void) {
     GPU_GRAPH.pos.y = 100;
     GPU_GRAPH.getUsage = dummy;
     if (initLinkedList(&GPU_GRAPH) == -1) return -1;
+    GPU_GRAPH.numUsages = 0;
 
     RAM_GRAPH.title[0] = LETTER_R;
     RAM_GRAPH.title[1] = LETTER_A;
@@ -36,6 +38,7 @@ int initGraphs(void) {
     RAM_GRAPH.pos.y = 350;
     RAM_GRAPH.getUsage = getMemoryUsage;
     if (initLinkedList(&RAM_GRAPH) == -1) return -1;
+    RAM_GRAPH.numUsages = 0;
 
     SSD_GRAPH.title[0] = LETTER_S;
     SSD_GRAPH.title[1] = LETTER_S;
@@ -44,6 +47,7 @@ int initGraphs(void) {
     SSD_GRAPH.pos.y = 350;
     SSD_GRAPH.getUsage = dummy;
     if (initLinkedList(&SSD_GRAPH) == -1) return -1;
+    SSD_GRAPH.numUsages = 0;
 
     return 0;
 }
@@ -84,11 +88,37 @@ int addValueToGraph(Graph* graph, float value) {
     return 0;
 }
 
-int updateGraph(Graph* graph) {
-    // Add usage data to graph
+int updateGraphUsages(Graph* graph) {
+    // Add usage to arry of usages for current frame
+    graph->numUsages++;
+
+    if (graph->numUsages == 1) {
+        graph->usages = malloc(sizeof(float));
+    } else {
+        graph->usages = realloc(graph->usages, graph->numUsages * sizeof(float));
+    }
+
+    if (graph->usages == NULL) return -1;
     float usage = graph->getUsage();
     if (usage == -1) return -1;
-    if (addValueToGraph(graph, usage) == -1) return -1;
+    graph->usages[graph->numUsages-1] = usage;
+
+    return 0;
+}
+
+int updateGraph(Graph* graph) {
+    // Add average of frame usages to graph values
+    float total = 0;
+    for (int i = 0; i < graph->numUsages; i++) {
+        total += graph->usages[i];
+    }
+
+    float average = total / graph->numUsages;
+    if (addValueToGraph(graph, average) == -1) return -1;
+
+    // Free up array of usages for current frame
+    graph->numUsages = 0;
+    free(graph->usages);
 
     return 0;
 }

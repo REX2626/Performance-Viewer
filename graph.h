@@ -15,11 +15,15 @@ typedef struct {
     float (*getUsage)(void);
     ListNode* startNode;
     ListNode* endNode;
+    float* usages;
+    int numUsages;
 } Graph;
 
 int initGraphs(void);
 
 int initLinkedList(Graph* graph);
+
+int updateGraphUsages(Graph* graph);
 
 int updateGraph(Graph* graph);
 

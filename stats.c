@@ -39,7 +39,7 @@ float getMemoryUsage(void) {
 }
 
 float dummy(void) {
-    t += 0.01;
+    t += 0.000005;
     if (t > 1) t == 0;
     return (sin(t) + 1) / 2;
 }

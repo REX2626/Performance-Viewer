@@ -28,6 +28,15 @@ Letter LETTER_S;
 Letter LETTER_U;
 
 
+int updateUsages(void) {
+    if (updateGraphUsages(&CPU_GRAPH) == -1) return -1;
+    if (updateGraphUsages(&GPU_GRAPH) == -1) return -1;
+    if (updateGraphUsages(&RAM_GRAPH) == -1) return -1;
+    if (updateGraphUsages(&SSD_GRAPH) == -1) return -1;
+
+    return 0;
+}
+
 int update(void) {
     if (updateGraph(&CPU_GRAPH) == -1) return -1;
     if (updateGraph(&GPU_GRAPH) == -1) return -1;
@@ -105,11 +114,14 @@ int main(int argc, char* argv[]) {
     // Main loop
     while (running) {
 
-        // Sleep until tick is finished
-        double nowTime = (double) clock() / CLOCKS_PER_SEC;
-        double sleepTime = max(0, prevTime + TICK_DURATION - nowTime);
-        Sleep(sleepTime * 1000);
+        // Collect usage amounts until frame is finished
         prevTime += TICK_DURATION;
+        do {
+            if (updateUsages() == -1) {
+                printf("Could not update usages (likely insufficient memory)\n");
+                return EXIT_FAILURE;
+            }
+        } while ((double) clock() / CLOCKS_PER_SEC < prevTime);
 
         // Handle events
         while (SDL_PollEvent(&event)) {
@@ -134,8 +146,7 @@ int main(int argc, char* argv[]) {
         // Graphics
         draw(renderer);
 
-        // TODO: Instead of sleeping, carry on updating usage info but not graphics
-        // TODO: Store multiple values for each point, and take average
+        // TODO: Replace floats with doubles for usages
         // TODO: Handle events in seperate thread irrespective of ticks per second
     }
 
