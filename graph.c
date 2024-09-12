@@ -11,43 +11,58 @@ const int GRAPH_TITLE_PADDING = GRAPH_TITLE_SCALE * 10;
 const int LINE_PADDING = 5;
 const int NUM_VALUES = GRAPH_WIDTH - 2 * LINE_PADDING;
 
+int initGraph(Graph* graph, Letter letter1, Letter letter2, Letter letter3, int x, int y, float (*getUsage)(void)) {
+    graph->title[0] = letter1;
+    graph->title[1] = letter2;
+    graph->title[2] = letter3;
+    graph->pos.x = x;
+    graph->pos.y = y;
+    graph->getUsage = getUsage;
+    if (initLinkedList(graph) == -1) return -1;
+    graph->numUsages = 0;
+}
+
 // initGraphs must be called after initText
 int initGraphs(void) {
-    CPU_GRAPH.title[0] = LETTER_C;
-    CPU_GRAPH.title[1] = LETTER_P;
-    CPU_GRAPH.title[2] = LETTER_U;
-    CPU_GRAPH.pos.x = 150;
-    CPU_GRAPH.pos.y = 100;
-    CPU_GRAPH.getUsage = getProcessorUsage;
-    if (initLinkedList(&CPU_GRAPH) == -1) return -1;
-    CPU_GRAPH.numUsages = 0;
+    if (initGraph(
+        &CPU_GRAPH,
+        LETTER_C,
+        LETTER_P,
+        LETTER_U,
+        150,
+        100,
+        getProcessorUsage
+    ) == -1) return -1;
 
-    GPU_GRAPH.title[0] = LETTER_G;
-    GPU_GRAPH.title[1] = LETTER_P;
-    GPU_GRAPH.title[2] = LETTER_U;
-    GPU_GRAPH.pos.x = 750;
-    GPU_GRAPH.pos.y = 100;
-    GPU_GRAPH.getUsage = dummy;
-    if (initLinkedList(&GPU_GRAPH) == -1) return -1;
-    GPU_GRAPH.numUsages = 0;
+    if (initGraph(
+        &GPU_GRAPH,
+        LETTER_G,
+        LETTER_P,
+        LETTER_U,
+        750,
+        100,
+        dummy
+    ) == -1) return -1;
 
-    RAM_GRAPH.title[0] = LETTER_R;
-    RAM_GRAPH.title[1] = LETTER_A;
-    RAM_GRAPH.title[2] = LETTER_M;
-    RAM_GRAPH.pos.x = 150;
-    RAM_GRAPH.pos.y = 350;
-    RAM_GRAPH.getUsage = getMemoryUsage;
-    if (initLinkedList(&RAM_GRAPH) == -1) return -1;
-    RAM_GRAPH.numUsages = 0;
+    if (initGraph(
+        &RAM_GRAPH,
+        LETTER_R,
+        LETTER_A,
+        LETTER_M,
+        150,
+        350,
+        getMemoryUsage
+    ) == -1) return -1;
 
-    SSD_GRAPH.title[0] = LETTER_S;
-    SSD_GRAPH.title[1] = LETTER_S;
-    SSD_GRAPH.title[2] = LETTER_D;
-    SSD_GRAPH.pos.x = 750;
-    SSD_GRAPH.pos.y = 350;
-    SSD_GRAPH.getUsage = dummy;
-    if (initLinkedList(&SSD_GRAPH) == -1) return -1;
-    SSD_GRAPH.numUsages = 0;
+    if (initGraph(
+        &SSD_GRAPH,
+        LETTER_S,
+        LETTER_S,
+        LETTER_D,
+        750,
+        350,
+        dummy
+    ) == -1) return -1;
 
     return 0;
 }

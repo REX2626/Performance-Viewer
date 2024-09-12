@@ -147,6 +147,7 @@ int main(int argc, char* argv[]) {
         draw(renderer);
 
         // TODO: Replace floats with doubles for usages
+        // TODO: malloc usages during initialization to remove if statement and free
         // TODO: Handle events in seperate thread irrespective of ticks per second
     }
 
