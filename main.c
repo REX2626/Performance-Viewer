@@ -146,8 +146,9 @@ int main(int argc, char* argv[]) {
         // Graphics
         draw(renderer);
 
+        // TODO: Implement GPU usage function
+        // TODO: Implement SSD usage function
         // TODO: Replace floats with doubles for usages
-        // TODO: malloc usages during initialization to remove if statement and free
         // TODO: Handle events in seperate thread irrespective of ticks per second
     }
 

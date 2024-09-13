@@ -19,6 +19,7 @@ int initGraph(Graph* graph, Letter letter1, Letter letter2, Letter letter3, int 
     graph->pos.y = y;
     graph->getUsage = getUsage;
     if (initLinkedList(graph) == -1) return -1;
+    graph->usages = malloc(0);
     graph->numUsages = 0;
 }
 
@@ -106,12 +107,7 @@ int addValueToGraph(Graph* graph, float value) {
 int updateGraphUsages(Graph* graph) {
     // Add usage to arry of usages for current frame
     graph->numUsages++;
-
-    if (graph->numUsages == 1) {
-        graph->usages = malloc(sizeof(float));
-    } else {
-        graph->usages = realloc(graph->usages, graph->numUsages * sizeof(float));
-    }
+    graph->usages = realloc(graph->usages, graph->numUsages * sizeof(float));
 
     if (graph->usages == NULL) return -1;
     float usage = graph->getUsage();
@@ -131,9 +127,8 @@ int updateGraph(Graph* graph) {
     float average = total / graph->numUsages;
     if (addValueToGraph(graph, average) == -1) return -1;
 
-    // Free up array of usages for current frame
+    // Reset usages to 0
     graph->numUsages = 0;
-    free(graph->usages);
 
     return 0;
 }
